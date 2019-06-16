@@ -1,0 +1,55 @@
+.Flash-box
+  .Wapper
+    .Chat-side
+      .Side-header
+        .Side-header__box
+          %p.Side-header__box__user-name
+            kizuki
+          %ul.Side-header__box__menu
+            %li.Side-header__box__menu__new-group
+              %a{:href => "https://chat-space-sample.herokuapp.com/groups/new"}
+                = fa_icon 'edit'
+            %li.Side-header__box__menu__edit-user
+              %a{:href => "https://chat-space-sample.herokuapp.com/users/edit"}
+                = fa_icon 'cog'
+      .Groups
+        %a{:href => "https://chat-space-sample.herokuapp.com/groups/messages"}
+        .Group
+          .Group__group-name
+            test
+          .Group__latest-message
+            こんにちは！
+    .Chat-main
+      .Main-header
+        .Main-header__left-box
+          %h2.Main-header__left-box__current-group{:deta_group_id => ""}
+          test
+          %ul.Main-header__left-box__member-list
+            member:
+            %li.Main-header__left-box__member-list__member
+              demizu
+              asai
+              kizuki
+        %a{:herf => "https://chat-space-sample.herokuapp.com/groups/edit"}
+          .Main-header__edit-btn
+            Edit
+      .Messages
+        .Message{:data_message_id => ""}
+        .Message__upper-info
+          .Message__upper-info__talker
+            kizuki
+          .Message__upper-info__date
+            2019/06/01/(sat) 00:00:00
+        .Message__text
+          こんにちは！
+      .Form
+        %form.New_message{:method => "post", :accept_charset => "UTF-8", :action => "/groups/messages", :enctype => "multipart/form-data", :id => "new_message"}
+          %input{:value => "", :type => "hidden", :name => "utf-8"}
+          %input{:value => "", :name => "authenticity_token", :type => "hidden"}
+          .Input-box
+            %input.Input-box__text{:id => "message_content", :name => "message[content]", :type => "text", :placeholder => "type a message"}
+            %label.Input-box__image{:for => "message_image"}
+              .Fa-image
+                = fa_icon "photo" 
+              %input.Input-box__image__file{:id => "message_image", :name => "message[image]", :type => "file"}
+          %input.Submit-btn{:data_disable_with => "Send", :value => "Send", :name => "commit", :type => "submit"}
