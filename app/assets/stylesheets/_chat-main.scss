@@ -1,17 +1,16 @@
-.chat-main {
+.Chat-main {
   width: calc(100vw - 300px);
   float: left;
-  &__main-header {
+  .Main-header {
     height: 100px;
     padding: 0, 40px;
     display: flex;
     justify-content: space-between;
     border-bottom: solid 1px, #eee;
     overflow: scroll;
-  }
     &__left-box {
       margin-top: 35px;
-    }
+      float: left;
       &__current-group {
         font-size: 20px;
         color: #333;
@@ -22,6 +21,7 @@
         font-size: 12px;
         color: #999999;
       }
+    }
     &__edit-btn {
       height: 40px;
       line-height: 40px;
@@ -32,19 +32,18 @@
       position: absolute;
       right: 40px;
     }
-  &__messages {
+  }
+  .Messages {
     height: calc(100vh - 190px);
     padding: 46px, 40px;
     background-color: #fafafa;
     overflow: scroll;
   }
-    &__message {
+    .Message {
       padding-bottom: 40px;
-    }
       &__upper-info {
         display: flex;
         margin-bottom: 10px;
-      }
         &__talker {
           color: #434a54;
           font-size: 16px;
@@ -55,23 +54,24 @@
           font-size: 12px;
           margin-left: 10px;
         }
+      }
       &__text {
         color: #434a54;
         font-size: 14px;
         margin-bottom: 10px;
       }
-  &__form {
+    }
+  .Form {
     height: 90px;
     padding: 20px, 40px;
     background-color: #ddd;
   }
-    &__new-message {
+    .New_message {
       display: flex;
     }
-    &__input-box {
+    .Input-box {
       position: relative;
       width: 100%;
-    }
       &__text {
         height: 50px;
         width: 100%;
@@ -84,12 +84,13 @@
         position: absolute;
         top: 10px;
         right: 10px;
-      }
         cursor: pointer;
         &__file {
           display: none;
         }
-    &__submit-btn {
+      }
+    }
+    .Submit-btn {
       width: 100px;
       height: 50px;
       padding: 0, 30px;
@@ -98,4 +99,4 @@
       color: white;
       cursor: pointer;
     }
-}
+  }
