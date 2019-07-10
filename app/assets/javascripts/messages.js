@@ -1,7 +1,6 @@
 $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述している
   function buildHTML(message){
     var image = message.image_url ? `<img src = '${message.image_url}' class: "Message__text__image"` : ''; // htmlでの書き方
-    console.log(image);
     var html = `<div class="Message">
                   <div class="Message__upper-info">
                     <div class="Message__upper-info__talker">
@@ -37,10 +36,8 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
       var html = buildHTML(data);
       $('.Messages').append(html);
       $('.Submit-btn').prop('disabled', false);
-      $('#message_content').val("");
-      $('#message_image').val("");
       $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
-      return false
+      $('#new_message')[0].reset(); //配列の中の[0]番目(formタグ全体)を指定している、jQueryオブジェクトからDOM要素を取得する
     })
     .fail(function(){
       alert('error');
