@@ -10,6 +10,9 @@
           %li.Main-header__left-box__member-list__member
             - @group.users.each do |member|
               = member.name
+      %h3.Main-header__edit-btn
+        = link_to "Edit" ,edit_group_path(params[:group_id]), method: :post
+
     .Messages
       = render @messages
     .Form
