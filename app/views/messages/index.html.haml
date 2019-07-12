@@ -11,7 +11,7 @@
             - @group.users.each do |member|
               = member.name
       %h3.Main-header__edit-btn
-        = link_to "Edit" ,edit_group_path(params[:group_id]), method: :post
+        = link_to "Edit" ,edit_group_path(params[:group_id]),method: :get
     .Messages
       = render @messages
     .Form
