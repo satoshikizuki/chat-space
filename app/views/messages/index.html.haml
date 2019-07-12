@@ -4,7 +4,7 @@
     .Main-header
       .Main-header__left-box
         %h2.Main-header__left-box__current-group
-        = @group.name
+          = @group.name
         %ul.Main-header__left-box__member-list
           Member : 
           %li.Main-header__left-box__member-list__member
@@ -12,7 +12,6 @@
               = member.name
       %h3.Main-header__edit-btn
         = link_to "Edit" ,edit_group_path(params[:group_id]),method: :get
-
     .Messages
       = render @messages
     .Form

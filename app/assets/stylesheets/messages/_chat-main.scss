@@ -28,14 +28,16 @@
   }
     &__edit-btn {
       height: 40px;
-      line-height: 40px;
       margin-top: 30px;
       padding-left: 20px;
       padding-right: 20px;
-      color: $light_blue;
       border: solid $light_blue;
       border-width: thin;
       position: absolute;
       right: 40px;
     }
+}
+
+.h3 {
+  color: $light_blue;
 }
