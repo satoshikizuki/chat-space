@@ -17,18 +17,24 @@ $(function(){
 
   var member_list = $("#chat-group-users");
 
-  function appendmember(user) {
+  function appendmember(id, name) {
     var html = `<div class="chat-group-user clearfix">
-                  <input name="chat_group[user_ids][]" type="hidden" value="${user.id}">
-                  <p class="chat-group-user__name">${user.name}</p>
+                  <input name="chat_group[user_ids][]" type="hidden" value="${id}">
+                  <p class="chat-group-user__name">${name}</p>
                   <a class="user-search-remove chat-group-user__btn chat-group-user__btn--remove js-remove-btn">削除</a>
                 </div>`
     member_list.append(html);
       }
 
-    $("#user-search-field").on("keyup", function() {
+    $("#user-search-field").on("input", function() {
       $("#user-search-result").empty();
       var input = $("#user-search-field").val();
+
+      if(input.length == 0){  //要改善 Web上での動きが少しおかしい
+        $("#user-search-result").empty();
+        return;
+      }
+
       $.ajax({
         type: "GET",
         url: "/users",
@@ -38,6 +44,7 @@ $(function(){
 
       .done(function(users){
         $("#user-search-result").empty();
+        console.log(users.length)
         if(users.length !== 0){
           users.forEach(function(user){
             appendUser(user);
@@ -54,14 +61,13 @@ $(function(){
     })
 
     $(document).on("click",".chat-group-user__btn--add", function() {
-      var user = $(this).attr("data-user-id");
-      var user = $(this).attr("data-user-name");
-      var addNewUser = appendmember(user);
-      $("#chat-group-users").append(addNewUser);
+      var user_id = $(this).attr("data-user-id");
+      var user_name = $(this).attr("data-user-name");
+      appendmember(user_id, user_name);
       $(this).parent(".chat-group-user").remove();
-    });
+    });  //「チャットメンバーを追加」部分で検索して出たユーザーを「チャットメンバー」に追加した際、ユーザー検索部分を消す
 
     $("#chat-group-users").on("click",".js-remove-btn", function() {
       $(this).parent().remove();
-      });
+      });  //".js-remove-btn"「this」を"click"したら"#chat-group-users"の親要素「parent()」を削除する「remove()」
 })
