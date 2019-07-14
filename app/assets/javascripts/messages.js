@@ -42,5 +42,78 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
     .fail(function(){
       alert('error');
     })
-　})
+  })
+
+//リファクタリングでコードを編集する
+  var buidMessageHTML = function(message){
+    if (message.content && message.image.url){ //data-idが反映されるようにしている
+      var html = `<div class="message" '${message.id}' + '>' +
+        <div class="upper-message"> +
+          <div class="upper-message__user-name"> +
+            ${message.user_name} +
+          </div> +
+          <div class="upper-message__date"> +
+            ${message.created_at} +
+          </div> +
+        </div> +
+        <div class="lower-message"> +
+          <p class="lower-message__content"> +
+            ${message.content} +
+          '</p>' +
+          '<img src="' + '${message.image.url} + class="lower-message__image" > +
+        '</div>' +
+      '</div>'
+    } else if (${message.content}) {  // 同様に、data-idが反映されるようにしている
+      var html = <div class="message" data-id= + '${message.id}' + '>' +
+        <div class="upper-message">' +
+          <div class="upper-message__user-name"> +
+            ${message.user_name} +
+          </div> +
+          <div class="upper-message__date"> +
+            ${message.created_at} +
+          </div> +
+        </div> +
+        <div class="lower-message"> +
+          <p class="lower-message__content"> +
+            ${message.content} +
+          </p> +
+        </div> +
+      </div>
+    } else if (message.image.url){ //同様に、data-idが反映されるようにしている
+      var html = <div class="message" data-id=' + '${message.id}' + '>' +
+        <div class="upper-message"> +
+          <div class="upper-message__user-name"> +
+            message.user_name +
+          </div> +
+          <div class="upper-message__date"> +
+            ${message.created_at} +
+          </div> +
+        </div> +
+        <div class="lower-message"> +
+          <img src=" + '${message.image.url}' + class="lower-message__image" > +
+        </div> +
+      </div>`
+    };
+    return html;
+  };
+
+
+  var reloadMessages = function(){
+
+    last_message_id = 
+    $.ajax({
+      url: ,
+      type: 'get',
+      dataType: 'json',
+      data: {id: last_message_id}
+    })
+    .done(function(messages){
+      var insertHTML = '';
+      alert('success');
+    })
+    .fail(function(){
+      alert('error');
+    });
+  };
+  setInterval(reloadMessages, 5000);
 });
