@@ -41,14 +41,14 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
     })
     .fail(function(){
       alert('error');
-    })
+    });
   })
-});
+
 
 // 自動更新(基本的には非同期通信の記述を使い回しする)
   var reloadMessages = function(){
 
-    last_message_id = message.id
+    last_message_id = $('.Message').last().data('id');
     $.ajax({
       url: "api/messages",
       type: "GET",
@@ -63,12 +63,10 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
           $('.Messages').append(html);
           $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
         })
-
-      alert('success');
     })
     .fail(function(){
-      alert('error');
-    });
+      console.log('error');
+    })
   };
   setInterval(reloadMessages, 5000);
-
+})
