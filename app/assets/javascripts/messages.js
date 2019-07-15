@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述している
   function buildHTML(message){
     var image = message.image_url ? `<img src = '${message.image_url}' class: "Message__text__image"` : ''; // htmlでの書き方
-    var html = `<div class="Message">
+    var html = `<div class="Message" data-id="${message.id}">
                   <div class="Message__upper-info">
                     <div class="Message__upper-info__talker">
                       <p>${message.name}</p>
@@ -43,72 +43,27 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
       alert('error');
     })
   })
+});
 
-//リファクタリングでコードを編集する
-  var buidMessageHTML = function(message){
-    if (message.content && message.image.url){ //data-idが反映されるようにしている
-      var html = `<div class="message" '${message.id}' + '>' +
-        <div class="upper-message"> +
-          <div class="upper-message__user-name"> +
-            ${message.user_name} +
-          </div> +
-          <div class="upper-message__date"> +
-            ${message.created_at} +
-          </div> +
-        </div> +
-        <div class="lower-message"> +
-          <p class="lower-message__content"> +
-            ${message.content} +
-          '</p>' +
-          '<img src="' + '${message.image.url} + class="lower-message__image" > +
-        '</div>' +
-      '</div>'
-    } else if (${message.content}) {  // 同様に、data-idが反映されるようにしている
-      var html = <div class="message" data-id= + '${message.id}' + '>' +
-        <div class="upper-message">' +
-          <div class="upper-message__user-name"> +
-            ${message.user_name} +
-          </div> +
-          <div class="upper-message__date"> +
-            ${message.created_at} +
-          </div> +
-        </div> +
-        <div class="lower-message"> +
-          <p class="lower-message__content"> +
-            ${message.content} +
-          </p> +
-        </div> +
-      </div>
-    } else if (message.image.url){ //同様に、data-idが反映されるようにしている
-      var html = <div class="message" data-id=' + '${message.id}' + '>' +
-        <div class="upper-message"> +
-          <div class="upper-message__user-name"> +
-            message.user_name +
-          </div> +
-          <div class="upper-message__date"> +
-            ${message.created_at} +
-          </div> +
-        </div> +
-        <div class="lower-message"> +
-          <img src=" + '${message.image.url}' + class="lower-message__image" > +
-        </div> +
-      </div>`
-    };
-    return html;
-  };
-
-
+// 自動更新(基本的には非同期通信の記述を使い回しする)
   var reloadMessages = function(){
 
-    last_message_id = 
+    last_message_id = message.id
     $.ajax({
-      url: ,
-      type: 'get',
+      url: "api/messages",
+      type: "GET",
       dataType: 'json',
       data: {id: last_message_id}
     })
     .done(function(messages){
       var insertHTML = '';
+      
+      $.each(messages,function(data) {
+          var html = buildHTML(data);
+          $('.Messages').append(html);
+          $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
+        })
+
       alert('success');
     })
     .fail(function(){
@@ -116,4 +71,4 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
     });
   };
   setInterval(reloadMessages, 5000);
-});
+
