@@ -1,7 +1,7 @@
 $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述している
   function buildHTML(message){
     var image = message.image_url ? `<img src = '${message.image_url}' class: "Message__text__image"` : ''; // htmlでの書き方
-    var html = `<div class="Message">
+    var html = `<div class="Message" data-id="${message.id}">
                   <div class="Message__upper-info">
                     <div class="Message__upper-info__talker">
                       <p>${message.name}</p>
@@ -41,6 +41,32 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
     })
     .fail(function(){
       alert('error');
+    });
+  })
+
+
+// 自動更新(基本的には非同期通信の記述を使い回しする)
+  var reloadMessages = function(){
+
+    last_message_id = $('.Message').last().data('id');
+    $.ajax({
+      url: "api/messages",
+      type: "GET",
+      dataType: 'json',
+      data: {id: last_message_id} // api/messages_controllerに送るdata
     })
-　})
-});
+    .done(function(messages){
+      var insertHTML = '';
+      
+      $.each(messages,function(data) {
+          var html = buildHTML(data);
+          $('.Messages').append(html);
+          $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
+        })
+    })
+    .fail(function(){
+      alert('error');
+    })
+  };
+  setInterval(reloadMessages, 5000);
+})
