@@ -53,7 +53,7 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
       url: "api/messages",
       type: "GET",
       dataType: 'json',
-      data: {id: last_message_id}
+      data: {id: last_message_id} // api/messages_controllerに送るdata
     })
     .done(function(messages){
       var insertHTML = '';

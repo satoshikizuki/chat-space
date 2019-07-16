@@ -4,7 +4,7 @@ class Api::MessagesController < ApplicationController
     @messages = @group.messages.includes(:user) 
     respond_to do |format|
       format.html
-      format.json {@new_messages = @messages.where('id > ?', params[:id])}
+      format.json {@new_messages = @messages.where('id > ?', params[:id])} # ? = ,(カンマ)以降に記述されている値(params[:id])
       end
   end
   
