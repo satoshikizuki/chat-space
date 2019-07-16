@@ -47,26 +47,33 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
 
 // 自動更新(基本的には非同期通信の記述を使い回しする)
   var reloadMessages = function(){
+  
+
 
     last_message_id = $('.Message').last().data('id');
-    $.ajax({
-      url: "api/messages",
-      type: "GET",
-      dataType: 'json',
-      data: {id: last_message_id} // api/messages_controllerに送るdata
-    })
-    .done(function(messages){
-      var insertHTML = '';
-      
-      $.each(messages,function(data) {
-          var html = buildHTML(data);
-          $('.Messages').append(html);
-          $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
+    if($('div').hasClass('form')){
+
+    
+        $.ajax({
+          url: "api/messages",
+          type: "GET",
+          dataType: 'json',
+          data: {id: last_message_id} // api/messages_controllerに送るdata
         })
-    })
-    .fail(function(){
-      alert('error');
-    })
-  };
+
+        .done(function(messages){
+          var insertHTML = '';
+          
+          $.each(messages,function(data) {
+              var html = buildHTML(data);
+              $('.Messages').append(html);
+              $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
+            })
+        })
+        .fail(function(){
+          alert('error');
+        })
+      };
+    }
   setInterval(reloadMessages, 5000);
 })
