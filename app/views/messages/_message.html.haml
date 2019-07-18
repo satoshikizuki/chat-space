@@ -3,7 +3,7 @@
     %p.Message__upper-info__talker
       = message.user.name
     %p.Message__upper-info__date
-      = message.created_at.strftime("%Y/%m/%d %H:%M")
+      = message.created_at.strftime("%Y/%m/%d")
   .Message__text
   - if message.content.present?
     .Message__text__content

@@ -13,7 +13,7 @@
       %h3.Main-header__edit-btn
         = link_to "Edit" ,edit_group_path(params[:group_id]),method: :get
     .Messages
-      = render @messages
+      = render @message
     .Form
       = form_for [@group, @message] do |f|
         = f.text_field :content, name: 'message[content]', type: 'text', class: 'Input-box__text', placeholder: 'type a message'
