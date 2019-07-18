@@ -72,8 +72,8 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
         })
         .fail(function(){
           alert('error');
-        })
+        });
       };
-    }
+    };
   setInterval(reloadMessages, 5000);
-})
+});
