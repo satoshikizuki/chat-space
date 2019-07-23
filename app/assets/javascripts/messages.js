@@ -1,7 +1,8 @@
 $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述している
   function buildHTML(message){
+    var html = '';
     var image = message.image_url ? `<img src = '${message.image_url}' class: "Message__text__image"` : ''; // htmlでの書き方
-    var html = `<div class="Message" data-id="${message.id}">
+    html = `<div class="Message" data-id="${message.id}">
                   <div class="Message__upper-info">
                     <div class="Message__upper-info__talker">
                       <p>${message.name}</p>
@@ -19,6 +20,7 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
                 </div>`
     return html;
   };
+
 
   $('#new_message').on('submit', function(e){
     e.preventDefault();
@@ -41,39 +43,36 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
     })
     .fail(function(){
       alert('error');
-    });
-  })
+    })
+  });
 
 
 // 自動更新(基本的には非同期通信の記述を使い回しする)
-  var reloadMessages = function(){
-  
+    var reloadMessages = function(){
+      //  現在のURLがmatch関数の正規表現のURLと一致していた場合に以下の処理を行う
+      if(window.location.href.match(/\/groups\/\d+\/messages/)){
 
+        last_message_id = $('.Message').last().data('id');
+        var groupId = $('.Main-header__left-box__current-group').data('id');
 
-    last_message_id = $('.Message').last().data('id');
-    if($('div').hasClass('form')){
-
-    
         $.ajax({
-          url: "api/messages",
+          url: `/groups/${groupId}/api/messages`, //index.html.hamlよりグループにidを持たせる
           type: "GET",
           dataType: 'json',
           data: {id: last_message_id} // api/messages_controllerに送るdata
         })
 
         .done(function(messages){
-          var insertHTML = '';
-          
-          $.each(messages,function(data) {
-              var html = buildHTML(data);
-              $('.Messages').append(html);
-              $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
-            })
+          messages.forEach(function(data){
+            var html = buildHTML(data);
+            $('.Messages').append(html);
+            $('.Messages').animate({scrollTop: $('.Messages')[0].scrollHeight}, 'fasts');
+          })
         })
         .fail(function(){
           alert('error');
-        });
-      };
-    };
+        })
+      }
+    }
   setInterval(reloadMessages, 5000);
 });

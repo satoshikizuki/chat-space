@@ -3,17 +3,17 @@
   .Chat-main
     .Main-header
       .Main-header__left-box
-        %h2.Main-header__left-box__current-group
+        %h2.Main-header__left-box__current-group{data: {id: @group.id}}
           = @group.name
         %ul.Main-header__left-box__member-list
           Member : 
           %li.Main-header__left-box__member-list__member
             - @group.users.each do |member|
               = member.name
-      %h3.Main-header__edit-btn
-        = link_to "Edit" ,edit_group_path(params[:group_id]),method: :get
+      .Main-header__edit-btn
+        = link_to "Edit" ,edit_group_path(params[:group_id]),method: :get, class: "btn"
     .Messages
-      = render @message
+      = render @messages
     .Form
       = form_for [@group, @message] do |f|
         = f.text_field :content, name: 'message[content]', type: 'text', class: 'Input-box__text', placeholder: 'type a message'
