@@ -49,7 +49,7 @@ $(document).on('turbolinks:load', function(){ //turbolinks Gemfileに記述し�
 
 // 自動更新(基本的には非同期通信の記述を使い回しする)
     var reloadMessages = function(){
-      //  現在のURLがmatch関数の正規表現のURLと一致していた場合に以下の処理を行う
+      //  現在のURLがmatch関数の正規表現(「\d」は数字の表記ここではidの事)のURLと一致していた場合に以下の処理を行う
       if(window.location.href.match(/\/groups\/\d+\/messages/)){
 
         last_message_id = $('.Message').last().data('id');

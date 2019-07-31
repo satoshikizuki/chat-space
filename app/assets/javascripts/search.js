@@ -30,7 +30,7 @@ $(document).on('turbolinks:load', function(){
       $("#user-search-result").empty();
       var input = $("#user-search-field").val();
 
-      if(input.length == 0){  //要改善 Web上での動きが少しおかしい
+      if(input.length == 0){
         $("#user-search-result").empty();
         return;
       }
